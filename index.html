@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Way2English — A2-07 Past Tense Irregular</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#4361ee; --violet:#7c3aed; --teal:#0d9488;
+  --green:#16a34a; --red:#dc2626;
+  --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
+  --shadow:0 4px 24px rgba(67,97,238,.10); --radius:16px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text);
+  padding-bottom:90px;
+}
+.hero{
+  background:linear-gradient(135deg,#1e3a8a 0%,#4361ee 55%,#7c3aed 100%);
+  color:#fff; padding:32px 20px 28px; text-align:center;
+}
+.hero h1{ margin:0 0 6px; font-size:24px; font-weight:800; }
+.hero p{ margin:0; opacity:.9; font-size:14px; }
+.stepper{
+  display:flex; overflow-x:auto; gap:8px; padding:14px 12px; background:#fff;
+  border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50;
+  -webkit-overflow-scrolling:touch;
+}
+.step-btn{
+  flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:4px;
+  background:var(--bg); border:1px solid var(--border); border-radius:12px;
+  padding:8px 12px; cursor:pointer; font-family:inherit; font-size:11px; color:var(--muted);
+  font-weight:600; min-width:64px; transition:.2s;
+}
+.step-btn .ic{ font-size:18px; }
+.step-btn.active{ background:var(--blue); color:#fff; border-color:var(--blue); }
+.step-btn.done{ background:#dcfce7; border-color:var(--green); color:var(--green); }
+.step-btn.done.active{ background:var(--green); color:#fff; }
+.container{ max-width:760px; margin:0 auto; padding:18px 14px; }
+.step-panel{ display:none; }
+.step-panel.active{ display:block; animation:fadeUp .35s ease both; }
+@keyframes fadeUp{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;} }
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:18px; margin-bottom:16px;
+}
+.card h2{ margin:0 0 12px; font-size:18px; font-weight:800; }
+.nav-row{ display:flex; justify-content:space-between; gap:10px; margin-top:8px; }
+.nav-btn{
+  flex:1; padding:12px; border-radius:12px; border:none; font-weight:700; font-size:14px;
+  cursor:pointer; font-family:inherit; background:var(--blue); color:#fff;
+}
+.nav-btn.secondary{ background:var(--bg); color:var(--text); border:1px solid var(--border); }
+.vimeo-wrap{ position:relative; padding-bottom:56.25%; height:0; border-radius:14px; overflow:hidden; margin-bottom:16px; }
+.vimeo-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.conv-list{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.conv-list div{
+  background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:10px 12px;
+  font-size:13px; font-weight:600;
+}
+.conv-img{ display:block; width:100%; border-radius:12px; margin-bottom:12px; }
+audio{ display:block; width:100%; margin-bottom:16px; }
+.quiz-q{ margin-bottom:16px; }
+.quiz-q p{ font-weight:700; margin:0 0 8px; font-size:14px; }
+.quiz-opt{
+  display:block; width:100%; text-align:left; padding:10px 14px; margin-bottom:6px;
+  border:1px solid var(--border); border-radius:10px; background:#fff; cursor:pointer;
+  font-family:inherit; font-size:13px; color:var(--text); transition:.15s;
+}
+.quiz-opt:hover:not(:disabled){ border-color:var(--blue); }
+.quiz-opt.correct{ background:#dcfce7; border-color:var(--green); color:#166534; font-weight:700; }
+.quiz-opt.wrong{ background:#fee2e2; border-color:var(--red); color:#991b1b; }
+.quiz-opt:disabled{ cursor:default; }
+.quiz-result{ margin-top:8px; padding:10px 14px; border-radius:10px; font-weight:800; font-size:14px; text-align:center; }
+.quiz-result.pass{ background:#dcfce7; color:#166534; }
+.quiz-result.fail{ background:#fef9c3; color:#854d0e; }
+.pzl-line{ font-size:14px; line-height:2.4; margin-bottom:6px; }
+.pzl-sel{
+  font-family:inherit; font-size:13px; padding:4px 8px; border-radius:8px; border:1px solid var(--border);
+  background:#fff; color:var(--text); margin:0 3px;
+}
+.pzl-sel.correct{ border-color:var(--green); background:#dcfce7; color:#166534; font-weight:700; }
+.pzl-sel.wrong{ border-color:var(--red); background:#fee2e2; color:#991b1b; }
+.pzl-audio-label{ font-size:12px; color:var(--muted); font-style:italic; margin:14px 0 6px; }
+.check-btn{
+  padding:10px 18px; border-radius:10px; border:none; background:var(--teal); color:#fff;
+  font-weight:700; font-size:14px; cursor:pointer; font-family:inherit; margin-top:6px;
+}
+.pzl-score{ margin-top:8px; font-weight:800; font-size:14px; color:var(--violet); }
+.car-slide{ display:none; }
+.car-slide.active{ display:block; animation:fadeUp .3s ease both; }
+.reading-conv{ font-size:15px; line-height:2; }
+.reading-speaker{ font-weight:800; color:var(--blue); }
+.reading-line{ margin-bottom:4px; }
+.hint-box{
+  background:#eef2ff; border:1px dashed var(--blue); border-radius:10px; padding:10px 14px;
+  font-size:13px; color:var(--blue); font-weight:600; margin-bottom:14px; text-align:center;
+}
+.car-nav{ display:flex; align-items:center; justify-content:space-between; margin-top:14px; }
+.car-nav button{
+  padding:10px 16px; border-radius:10px; border:1px solid var(--border); background:#fff;
+  font-weight:700; font-size:13px; cursor:pointer; font-family:inherit;
+}
+.car-nav button:disabled{ opacity:.4; cursor:default; }
+.car-counter{ font-weight:800; color:var(--muted); font-size:13px; }
+.fc-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fc-card{ position:relative; height:130px; cursor:pointer; perspective:1000px; }
+.fc-inner{ position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+.fc-card.flipped .fc-inner{ transform:rotateY(180deg); }
+.fc-front,.fc-back{
+  position:absolute; inset:0; border-radius:12px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center; padding:10px; backface-visibility:hidden;
+  font-size:13px; font-weight:700;
+}
+.fc-front{ background:linear-gradient(135deg,#1e3a8a,#4361ee,#7c3aed); color:#fff; }
+.fc-front .hint{ font-size:11px; font-weight:500; opacity:.85; margin-top:6px; }
+.fc-back{ background:#fff; border:1px solid var(--border); color:var(--text); transform:rotateY(180deg); }
+.flip-all-btn{
+  display:block; width:100%; padding:12px; border-radius:12px; border:none;
+  background:var(--blue); color:#fff; font-weight:700; font-size:14px; cursor:pointer; font-family:inherit;
+  margin-bottom:14px;
+}
+.sp-line{ font-size:14px; line-height:2; margin-bottom:6px; }
+.sp-role{ font-weight:800; color:var(--violet); margin-right:6px; }
+.sp-blank{ display:inline-block; width:260px; border-bottom:2px dashed var(--violet); color:var(--muted); font-size:13px; font-style:italic; }
+.sp-interview-note{ font-size:12px; color:var(--muted); font-style:italic; text-align:center; margin-bottom:16px; }
+.results-fab{
+  position:fixed; bottom:18px; right:18px; background:var(--violet); color:#fff; border:none;
+  border-radius:30px; padding:14px 18px; font-weight:800; font-size:14px; cursor:pointer;
+  box-shadow:0 6px 20px rgba(124,58,237,.4); z-index:100; font-family:inherit;
+}
+.modal-overlay{
+  display:none; position:fixed; inset:0; background:rgba(15,23,42,.55); z-index:200;
+  align-items:center; justify-content:center; padding:16px;
+}
+.modal-overlay.open{ display:flex; }
+.modal-box{
+  background:#fff; border-radius:16px; padding:22px; max-width:420px; width:100%;
+  max-height:85vh; overflow-y:auto;
+}
+.modal-box h2{ margin-top:0; }
+.modal-box table{ width:100%; border-collapse:collapse; font-size:14px; margin-bottom:12px; }
+.modal-box td{ padding:6px 4px; border-bottom:1px solid var(--border); }
+.modal-total{ text-align:center; font-size:20px; font-weight:800; margin:10px 0 14px; }
+.modal-box textarea{
+  width:100%; height:160px; font-family:'JetBrains Mono',monospace; font-size:12px;
+  border:1px solid var(--border); border-radius:10px; padding:10px; resize:vertical;
+}
+.modal-close{
+  margin-top:12px; width:100%; padding:12px; border-radius:10px; border:none;
+  background:var(--bg); border:1px solid var(--border); font-weight:700; cursor:pointer; font-family:inherit;
+}
+.copy-btn{
+  margin-top:8px; width:100%; padding:12px; border-radius:10px; border:none;
+  background:var(--teal); color:#fff; font-weight:700; cursor:pointer; font-family:inherit;
+}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>Way2English — A2-07</h1>
+  <p>Past Tense Irregular — минулий час (неправильні дієслова)</p>
+</div>
+<div class="stepper" id="stepper"></div>
+<div class="container">
+
+  <!-- STEP 0: WATCH -->
+  <div class="step-panel active" id="panel-0">
+    <div class="card">
+      <h2>🎬 Watch</h2>
+      <div class="vimeo-wrap">
+        <iframe src="https://www.youtube.com/embed/ZUn4N8K6lRY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--violet);margin-bottom:10px;">У цьому відео 4 розмови:</h3>
+      <div class="conv-list">
+        <div>1️⃣ Минула ніч (Last Night)</div>
+        <div>2️⃣ Поїздка (Trip)</div>
+        <div>3️⃣ Вихідні (Weekend)</div>
+        <div>4️⃣ Свята (Holidays)</div>
+      </div>
+      <div class="nav-row"><button class="nav-btn" onclick="goStep(1)">Далі →</button></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: СЛОВА (Quizlet) -->
+  <div class="step-panel" id="panel-1">
+    <div class="card">
+      <h2>📚 Слова</h2>
+      <p style="font-size:13px;color:var(--muted);margin:-4px 0 14px;">Вивчи слова уроку у Quizlet — натискай картки щоб перевертати</p>
+      <iframe src="https://quizlet.com/1119384163/flashcards/embed?i=37cc42&x=1jj1" height="500" width="100%" style="border:0;border-radius:12px;"></iframe>
+      <div class="nav-row" style="margin-top:14px;">
+        <button class="nav-btn secondary" onclick="goStep(0)">← Назад</button>
+        <button class="nav-btn" onclick="goStep(2)">Далі →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEPS 2-5 -->
+  <div class="step-panel" id="panel-2"></div>
+  <div class="step-panel" id="panel-3"></div>
+  <div class="step-panel" id="panel-4"></div>
+  <div class="step-panel" id="panel-5"></div>
+
+  <!-- STEP 6: ПАЗЛ -->
+  <div class="step-panel" id="panel-6">
+    <div class="card">
+      <h2>🧩 Пазл</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:-4px;">Обери правильне слово з випадаючого списку.</p>
+    </div>
+    <div id="puzzleContainer"></div>
+    <div class="card">
+      <div class="nav-row">
+        <button class="nav-btn secondary" onclick="goStep(5)">← Назад</button>
+        <button class="nav-btn" onclick="goStep(7)">Далі →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: ЧИТАННЯ -->
+  <div class="step-panel" id="panel-7">
+    <div class="card">
+      <h2>📖 Читання</h2>
+      <div class="hint-box">🇺🇦 Прочитай репліку англійською та переклади усно</div>
+      <div id="readingSlides"></div>
+      <div class="car-nav">
+        <button id="rprev" onclick="carNav('r',-1)" disabled>← Назад</button>
+        <span class="car-counter" id="rcounter">1 / 4</span>
+        <button id="rnext" onclick="carNav('r',1)">Далі →</button>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn secondary" onclick="goStep(6)">← Крок 6</button>
+        <button class="nav-btn" onclick="goStep(8)">Крок 9 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 8: КАРТКИ -->
+  <div class="step-panel" id="panel-8">
+    <div class="card">
+      <h2>🃏 Картки</h2>
+      <button class="flip-all-btn" onclick="flipAll()">🔄 Перевернути всі</button>
+      <div class="fc-grid" id="fcGrid"></div>
+      <div class="nav-row" style="margin-top:14px;">
+        <button class="nav-btn secondary" onclick="goStep(7)">← Назад</button>
+        <button class="nav-btn" onclick="goStep(9)">Далі →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 9: ГОВОРИМО -->
+  <div class="step-panel" id="panel-9">
+    <div class="card">
+      <h2>🗣️ Говоримо</h2>
+      <div id="speakingSlides"></div>
+      <div class="car-nav">
+        <button id="spprev" onclick="carNav('sp',-1)" disabled>← Назад</button>
+        <span class="car-counter" id="spcounter">1 / 4</span>
+        <button id="spnext" onclick="carNav('sp',1)">Далі →</button>
+      </div>
+      <div class="nav-row">
+        <button class="nav-btn secondary" onclick="goStep(8)">← Назад</button>
+        <button class="nav-btn" onclick="openResults()">📊 Результати</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="results-fab" onclick="openResults()">📊 Результати <span id="fabScore">0/0</span></button>
+
+<div class="modal-overlay" id="resultsModal">
+  <div class="modal-box">
+    <h2>📊 Результати</h2>
+    <table><tbody id="resultsBody"></tbody></table>
+    <div class="modal-total" id="resultsTotal"></div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:4px;">Скопіюй звіт та надішли вчителю:</p>
+    <textarea id="resultsText" readonly></textarea>
+    <button class="copy-btn" onclick="copyResults()">📋 Скопіювати звіт</button>
+    <button class="modal-close" onclick="closeResults()">Закрити</button>
+  </div>
+</div>
+
+<script>
+const CONVS = [
+  {
+    title: 'Conversation 1 — Last Night',
+    img: 'A2-07-1-Past-Tense-Irregular-Last-Night.jpg',
+    audio: 'A2-07-1-Past-Tense-Irregular-Last-Night.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-1-Past-Tense-Irregular-Last-Night.mp3',
+    text: [
+      { role: 'Man', line: 'What did you do last night?' },
+      { role: 'Woman', line: 'I just stayed home and took it easy. And you?' },
+      { role: 'Man', line: 'I went to the park and played soccer.' },
+      { role: 'Woman', line: 'Oh, did you win?' },
+      { role: 'Man', line: 'Yes, we won! I was so happy!' },
+      { role: 'Woman', line: 'Oh, I am glad you had a good time.' },
+      { role: 'Man', line: "I hurt my ankle though, so it wasn't all perfect." },
+      { role: 'Woman', line: 'Well, at least you won!' },
+    ],
+    questions: [
+      { q: 'What did the woman do last night?', opts: ['played soccer', 'stayed home and took it easy', 'went to a party', 'worked late'], ans: 1 },
+      { q: 'Did the man win the soccer game?', opts: ['No, they lost', 'Yes, they won', 'The game was canceled', "It's not mentioned"], ans: 1 },
+      { q: 'What happened to the man?', opts: ['He lost his keys', 'He hurt his ankle', 'He got sick', 'He missed the bus'], ans: 1 },
+    ]
+  },
+  {
+    title: 'Conversation 2 — Trip',
+    img: 'A2-07-2-Past-Tense-_Irregular-Trip.jpg',
+    audio: 'A2-07-2-Past-Tense-_Irregular-Trip.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-2-Past-Tense-%20Irregular-Trip.mp3',
+    text: [
+      { role: 'Man', line: 'How was your trip to Brazil?' },
+      { role: 'Woman', line: 'It was wonderful. I had such a great time.' },
+      { role: 'Man', line: 'How was the food?' },
+      { role: 'Woman', line: 'It was all so good. I ate so much. I think I put on some weight.' },
+      { role: 'Man', line: 'What did you do there?' },
+      { role: 'Woman', line: 'Well, we spent a lot of time at the beach, but we also went out at night.' },
+      { role: 'Man', line: 'I hear the nightlife there is really good.' },
+      { role: 'Woman', line: 'It is! We had so much fun!' },
+    ],
+    questions: [
+      { q: 'Where did the woman travel to?', opts: ['Mexico', 'Brazil', 'Spain', 'Argentina'], ans: 1 },
+      { q: 'What does she say about the food?', opts: ['it was bad', 'it was all so good', "she didn't try much", 'it was too spicy'], ans: 1 },
+      { q: 'Where did they spend a lot of time?', opts: ['shopping malls', 'the beach', 'museums', 'the hotel'], ans: 1 },
+    ]
+  },
+  {
+    title: 'Conversation 3 — Weekend',
+    img: 'A2-07-3-Past-Tense-Irregular-Weekend.jpg',
+    audio: 'A2-07-3-Past-Tense-Irregular-Weekend.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-3-Past-Tense-Irregular-Weekend.mp3',
+    text: [
+      { role: 'Man', line: 'What did you do over the weekend?' },
+      { role: 'Woman', line: 'I met some friends for dinner.' },
+      { role: 'Man', line: 'Oh, where did you go?' },
+      { role: 'Woman', line: 'We ate at the new pizza place near the station.' },
+      { role: 'Man', line: 'Oh, I went there last week. I really liked it.' },
+      { role: 'Woman', line: 'So did we. What did you eat?' },
+      { role: 'Man', line: 'We tried the pan-style pizza. It was so good.' },
+      { role: 'Woman', line: "I didn't try that, but I heard it was really good." },
+      { role: 'Man', line: 'Yeah, my friend told me to try it. He said it was good and he was right.' },
+      { role: 'Woman', line: "I'll try it next time." },
+    ],
+    questions: [
+      { q: 'What did the woman do over the weekend?', opts: ['went shopping', 'met friends for dinner', 'stayed home', 'traveled'], ans: 1 },
+      { q: 'Where did they eat?', opts: ['a new sushi place', 'a new pizza place near the station', 'a restaurant downtown', 'at home'], ans: 1 },
+      { q: 'What pizza did the man try?', opts: ['cheese pizza', 'pan-style pizza', 'thin crust pizza', 'no pizza'], ans: 1 },
+    ]
+  },
+  {
+    title: 'Conversation 4 — Holidays',
+    img: 'A2-07-4-Past-Tense-Irregular-Holidays.jpg',
+    audio: 'A2-07-4-Past-Tense-Irregular-Holidays.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-4-Past-Tense-Irregular-Holidays.mp3',
+    text: [
+      { role: 'Man', line: 'What did you do over the holidays?' },
+      { role: 'Woman', line: 'Not much. I bought a new car, though.' },
+      { role: 'Man', line: 'Really, what did you buy?' },
+      { role: 'Woman', line: 'I bought a new Lexus. It is so nice.' },
+      { role: 'Man', line: 'Can I ask? How much did you pay for it?' },
+      { role: 'Woman', line: 'It cost about 50,000 dollars. I took out a loan though.' },
+      { role: 'Man', line: 'Wow, you paid a lot! I think I spent about 5,000 pounds for my car, but I bought it used.' },
+      { role: 'Woman', line: 'Yeah, I really wanted a new car. I think I got what I paid for though.' },
+    ],
+    questions: [
+      { q: 'What did the woman buy?', opts: ['a house', 'a new Lexus', 'a motorcycle', 'a boat'], ans: 1 },
+      { q: 'How did she pay for the car?', opts: ['cash', 'she took out a loan', 'her parents paid', "it's a gift"], ans: 1 },
+      { q: "What kind of car did the man buy?", opts: ['a new car', 'a used car', 'no car', 'a rental car'], ans: 1 },
+    ]
+  },
+];
+
+const PUZZLES = [
+  {
+    title: 'Conversation 1 — Last Night',
+    audio: 'A2-07-1-Past-Tense-Irregular-Last-Night.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-1-Past-Tense-Irregular-Last-Night.mp3',
+    bank: ['took','though','least','win','last','glad','soccer','went'],
+    lines: [
+      { pre: 'Man: What did you do ', word: 'last', post: ' night?' },
+      { pre: 'Woman: I just stayed home and ', word: 'took', post: ' it easy. And you?' },
+      { pre: 'Man: I ', word: 'went', post: ' to the park and played ', pre2: '', word2: 'soccer', post2: '.' },
+      { skip: true, pre: 'Woman: Oh, did you win?' },
+      { skip: true, pre: 'Man: Yes, we won! I was so happy!' },
+      { pre: 'Woman: Oh, I am ', word: 'glad', post: ' you had a good time.' },
+      { pre: "Man: I hurt my ankle ", word: 'though', post: ", so it wasn't all perfect." },
+      { pre: 'Woman: Well, at ', word: 'least', post: ' you won!' },
+    ]
+  },
+  {
+    title: 'Conversation 2 — Trip',
+    audio: 'A2-07-2-Past-Tense-_Irregular-Trip.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-2-Past-Tense-%20Irregular-Trip.mp3',
+    bank: ['food','hear','spent','trip','out','did','such','put'],
+    lines: [
+      { pre: 'Man: How was your ', word: 'trip', post: ' to Brazil?' },
+      { pre: 'Woman: It was wonderful. I had ', word: 'such', post: ' a great time.' },
+      { pre: 'Man: How was the ', word: 'food', post: '?' },
+      { pre: 'Woman: It was all so good. I ate so much, I think I ', word: 'put', post: ' on some weight.' },
+      { pre: 'Man: What ', word: 'did', post: ' you do there?' },
+      { pre: 'Woman: We ', word: 'spent', post: ' a lot of time at the beach, but we also went ', pre2: '', word2: 'out', post2: ' at night.' },
+      { pre: 'Man: I ', word: 'hear', post: ' the nightlife there is really good.' },
+    ]
+  },
+  {
+    title: 'Conversation 3 — Weekend',
+    audio: 'A2-07-3-Past-Tense-Irregular-Weekend.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-3-Past-Tense-Irregular-Weekend.mp3',
+    bank: ['told','met','week','style','over','did','near','heard'],
+    lines: [
+      { pre: 'Man: What did you do ', word: 'over', post: ' the weekend?' },
+      { pre: 'Woman: I ', word: 'met', post: ' some friends for dinner.' },
+      { skip: true, pre: 'Man: Oh, where did you go?' },
+      { pre: 'Woman: We ate at the new pizza place ', word: 'near', post: ' the station.' },
+      { pre: 'Man: Oh, I went there last ', word: 'week', post: '. I really liked it.' },
+      { pre: 'Woman: So did we. What ', word: 'did', post: ' you eat?' },
+      { pre: 'Man: We tried the pan ', word: 'style', post: ' pizza. It was so good.' },
+      { pre: "Woman: I didn't try that, but I ", word: 'heard', post: ' it was really good.' },
+      { pre: 'Man: My friend ', word: 'told', post: ' me to try it.' },
+    ]
+  },
+  {
+    title: 'Conversation 4 — Holidays',
+    audio: 'A2-07-4-Past-Tense-Irregular-Holidays.mp3',
+    fallback: 'https://elllo.org/Audio/SoundGrammar/A2-Audio4x/A2-07-4-Past-Tense-Irregular-Holidays.mp3',
+    bank: ['paid','bought','much','spent','do','out','did','used'],
+    lines: [
+      { pre: 'Man: What did you ', word: 'do', post: ' over the holidays?' },
+      { pre: 'Woman: Not much. I ', word: 'bought', post: ' a new car though.' },
+      { pre: 'Man: Really, what ', word: 'did', post: ' you buy?' },
+      { skip: true, pre: 'Woman: I bought a new Lexus. It is so nice.' },
+      { pre: 'Man: Can I ask, how ', word: 'much', post: ' did you pay for it?' },
+      { pre: 'Woman: It cost about 50 thousand dollars. I took ', word: 'out', post: ' a loan though.' },
+      { pre: 'Man: I think I ', word: 'spent', post: ' about 5 thousand dollars for my car, but I bought it ', pre2: '', word2: 'used', post2: '.' },
+      { pre: 'Woman: I think I got what I ', word: 'paid', post: ' for, though.' },
+    ]
+  },
+];
+
+const FLASHCARDS = [
+  { en: 'I just stayed home and took it easy.', ua: 'Я просто залишився вдома і відпочивав.' },
+  { en: 'I am glad you had a good time.', ua: 'Я радий(а), що ти добре провів(ла) час.' },
+  { en: 'Well, at least you won!', ua: 'Що ж, принаймні ти переміг(ла)!' },
+  { en: 'I had such a great time.', ua: 'У мене був чудовий час.' },
+  { en: 'I think I put on some weight.', ua: 'Думаю, я набрав(ла) трохи ваги.' },
+  { en: 'We spent a lot of time at the beach.', ua: 'Ми провели багато часу на пляжі.' },
+  { en: 'I hear the nightlife there is really good.', ua: 'Чула, що нічне життя там дуже хороше.' },
+  { en: 'I met some friends for dinner.', ua: 'Я зустрівся(лась) з друзями на вечерю.' },
+  { en: 'My friend told me to try it.', ua: 'Мій друг порадив мені спробувати це.' },
+  { en: 'I took out a loan.', ua: 'Я взяв(ла) кредит.' },
+  { en: 'I bought it used.', ua: 'Я купив(ла) це вживаним.' },
+  { en: 'I got what I paid for.', ua: 'Я отримав(ла) те, за що заплатив(ла).' },
+];
+
+const SPEAKING = [
+  {
+    title: 'Діалог 1 з 4',
+    interview: false,
+    lines: [
+      { role: 'Студент А', text: 'Що ти робив(ла) вчора ввечері?' },
+      { role: 'Студент Б', text: 'Я просто залишився(лась) вдома і відпочивав(ла).' },
+      { role: 'Студент А', text: 'А я ходив(ла) до парку грати в футбол.' },
+      { role: 'Студент Б', text: 'Ви виграли?' },
+      { role: 'Студент А', text: 'Так, ми перемогли! Я був(ла) дуже радий(а)!' },
+      { role: 'Студент Б', text: 'Чудово, я рад(а) за тебе!' },
+      { role: 'Студент А', text: 'Але я пошкодив(ла) ногу.' },
+      { role: 'Студент Б', text: 'Принаймні ти переміг(ла)!' },
+    ]
+  },
+  {
+    title: 'Діалог 2 з 4',
+    interview: false,
+    lines: [
+      { role: 'Студент А', text: 'Як пройшла твоя поїздка?' },
+      { role: 'Студент Б', text: 'Чудово! У мене був прекрасний час.' },
+      { role: 'Студент А', text: 'Якою була їжа?' },
+      { role: 'Студент Б', text: 'Дуже смачною, я з\u2019їв(ла) дуже багато!' },
+      { role: 'Студент А', text: 'Що ти там робив(ла)?' },
+      { role: 'Студент Б', text: 'Ми проводили багато часу на пляжі.' },
+      { role: 'Студент А', text: 'А нічне життя там добре?' },
+      { role: 'Студент Б', text: 'Так, ми дуже добре провели час!' },
+    ]
+  },
+  {
+    title: 'Діалог 3 з 4',
+    interview: true,
+    note: '🎤 Студент А перекладає запитання англійською → Студент Б відповідає про себе',
+    lines: [
+      { role: 'Студент А', text: 'Що ти робив(ла) минулого вихідного?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи зустрічав(ла)ся ти з друзями нещодавно?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Куди ти ходив(ла) поїсти останнього разу?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи подорожував(ла) ти кудись минулого року?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Що ти їв(ла) на вечерю вчора?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи купував(ла) ти щось дороге нещодавно?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи грав(ла) ти у спортивну гру минулого тижня?' },
+      { role: 'Студент Б', blank: true },
+    ]
+  },
+  {
+    title: 'Діалог 4 з 4',
+    interview: true,
+    note: '🎤 Студент А перекладає запитання англійською → Студент Б відповідає про себе',
+    lines: [
+      { role: 'Студент А', text: 'Що ти робив(ла) на останніх святах?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи купував(ла) ти щось велике нещодавно?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Скільки ти заплатив(ла) за свій найдорожчий придбаний предмет?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи брав(ла) ти коли-небудь кредит на щось?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи купував(ла) ти коли-небудь вживаний автомобіль чи техніку?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи пошкоджував(ла) ти щось граючи в спорт?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Яку найкращу поїздку ти пам\u2019ятаєш?' },
+      { role: 'Студент Б', blank: true },
+      { role: 'Студент А', text: 'Чи їв(ла) ти щось нове та смачне нещодавно?' },
+      { role: 'Студент Б', blank: true },
+    ]
+  },
+];
+
+const STEPS = [
+  { icon: '🎬', label: 'Watch' },
+  { icon: '📚', label: 'Слова' },
+  { icon: '🎧', label: 'Розмова 1' },
+  { icon: '🎧', label: 'Розмова 2' },
+  { icon: '🎧', label: 'Розмова 3' },
+  { icon: '🎧', label: 'Розмова 4' },
+  { icon: '🧩', label: 'Пазл' },
+  { icon: '📖', label: 'Читання' },
+  { icon: '🃏', label: 'Картки' },
+  { icon: '🗣️', label: 'Говоримо' },
+];
+
+const correctMap = {};
+const quizAnswered = {};
+const quizScores = { q1: null, q2: null, q3: null, q4: null };
+const puzzleScores = { p1: null, p2: null, p3: null, p4: null };
+const carState = { r: 0, sp: 0 };
+
+function buildStepper() {
+  let html = '';
+  STEPS.forEach((s, i) => {
+    html += '<button class="step-btn' + (i === 0 ? ' active' : '') + '" id="sbtn-' + i + '" onclick="goStep(' + i + ')">' +
+      '<span class="ic">' + s.icon + '</span><span>' + s.label + '</span></button>';
+  });
+  document.getElementById('stepper').innerHTML = html;
+}
+
+function goStep(i) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.step-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + i).classList.add('active');
+  document.getElementById('sbtn-' + i).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function markDone(i) {
+  const b = document.getElementById('sbtn-' + i);
+  if (b) b.classList.add('done');
+}
+
+function answerQuiz(qKey, qi, oi, ans, convIdx, btn) {
+  const ck = qKey + '-' + qi;
+  if (quizAnswered[ck]) return;
+  quizAnswered[ck] = true;
+  correctMap[ck] = (oi === ans);
+  const allOpts = btn.parentElement.querySelectorAll('.quiz-opt');
+  allOpts.forEach(b => b.disabled = true);
+  if (oi === ans) { btn.classList.add('correct'); }
+  else { btn.classList.add('wrong'); allOpts[ans].classList.add('correct'); }
+  const total = CONVS[convIdx].questions.length;
+  const allDone = Array.from({ length: total }, (_, k) => !!quizAnswered[qKey + '-' + k]).every(Boolean);
+  if (allDone) {
+    let got = 0;
+    for (let k = 0; k < total; k++) { if (correctMap[qKey + '-' + k]) got++; }
+    quizScores[qKey] = { got, total };
+    updateFab();
+    markDone(convIdx + 2);
+    document.getElementById('qresult-' + convIdx).innerHTML =
+      '<div class="quiz-result ' + (got === total ? 'pass' : 'fail') + '">' +
+      (got === total ? '🏆' : '💪') + ' Результат: ' + got + '/' + total + '</div>';
+  }
+}
+
+function buildConvs() {
+  CONVS.forEach((c, i) => {
+    const qKey = 'q' + (i + 1);
+    let qHtml = '';
+    c.questions.forEach((q, qi) => {
+      let optsHtml = '';
+      q.opts.forEach((o, oi) => {
+        optsHtml += '<button class="quiz-opt" onclick="answerQuiz(\'' + qKey + '\',' + qi + ',' + oi + ',' + q.ans + ',' + i + ',this)">' + o + '</button>';
+      });
+      qHtml += '<div class="quiz-q"><p>' + (qi + 1) + '. ' + q.q + '</p>' + optsHtml + '</div>';
+    });
+    const html =
+      '<div class="card"><h2>🎧 ' + c.title + '</h2>' +
+      '<img class="conv-img" src="' + c.img + '" alt="' + c.title + '">' +
+      '<audio controls style="display:block;width:100%;margin-bottom:16px;">' +
+        '<source src="' + c.audio + '"><source src="' + c.fallback + '"></audio>' +
+      qHtml + '<div id="qresult-' + i + '"></div></div>' +
+      '<div class="card"><div class="nav-row">' +
+        '<button class="nav-btn secondary" onclick="goStep(' + (i + 1) + ')">← Назад</button>' +
+        '<button class="nav-btn" onclick="goStep(' + (i + 3 > 6 ? 6 : i + 3) + ')">Далі →</button>' +
+      '</div></div>';
+    document.getElementById('panel-' + (i + 2)).innerHTML = html;
+  });
+}
+
+function makeSel(word, pi, bank) {
+  const shuffled = [...bank].sort(() => Math.random() - 0.5);
+  let o = '<option value="">—</option>';
+  shuffled.forEach(w => { o += '<option value="' + w + '">' + w + '</option>'; });
+  return '<select class="pzl-sel" data-ans="' + word + '" data-pi="' + pi + '">' + o + '</select>';
+}
+
+function buildPuzzles() {
+  let pHtml = '';
+  PUZZLES.forEach((pz, pi) => {
+    let lh = '';
+    pz.lines.forEach(ln => {
+      if (ln.skip) { lh += '<div class="pzl-line">' + ln.pre + '</div>'; return; }
+      lh += '<div class="pzl-line">' + ln.pre + makeSel(ln.word, pi, pz.bank) + (ln.post || '');
+      if (ln.pre2 !== undefined) { lh += ln.pre2 + makeSel(ln.word2, pi, pz.bank) + (ln.post2 || ''); }
+      lh += '</div>';
+    });
+    pHtml += '<div class="card" id="pzl-card-' + pi + '">' +
+      '<div style="font-weight:800;font-size:16px;margin-bottom:16px;">' + pz.title + '</div>' +
+      lh +
+      '<div class="pzl-audio-label">💡 Якщо треба — прослухай аудіо ще раз — ' + pz.title + '</div>' +
+      '<audio controls style="display:block;width:100%;"><source src="' + pz.audio + '"><source src="' + pz.fallback + '"></audio><br>' +
+      '<button class="check-btn" onclick="checkPuzzle(' + pi + ',\'p' + (pi + 1) + '\')">Перевірити</button>' +
+      '<div class="pzl-score" id="pzl-score-' + pi + '"></div></div>';
+  });
+  document.getElementById('puzzleContainer').innerHTML = pHtml;
+}
+
+function checkPuzzle(pi, pKey) {
+  const card = document.getElementById('pzl-card-' + pi);
+  const sels = card.querySelectorAll('.pzl-sel[data-pi="' + pi + '"]');
+  let got = 0;
+  sels.forEach(sel => {
+    sel.classList.remove('correct', 'wrong');
+    if (sel.value === sel.dataset.ans) { sel.classList.add('correct'); got++; }
+    else sel.classList.add('wrong');
+  });
+  puzzleScores[pKey] = { got, total: sels.length };
+  updateFab(); markDone(6);
+  document.getElementById('pzl-score-' + pi).textContent = 'Результат: ' + got + '/' + sels.length;
+}
+
+function buildReading() {
+  let rSlides = '';
+  CONVS.forEach((c, i) => {
+    let lines = c.text.map(l =>
+      '<div class="reading-line"><span class="reading-speaker">' + l.role + ':</span> ' + l.line + '</div>'
+    ).join('');
+    rSlides += '<div class="car-slide' + (i === 0 ? ' active' : '') + '" id="rslide-' + i + '">' +
+      '<div style="font-weight:800;margin-bottom:10px;color:var(--violet);">' + c.title + '</div>' +
+      '<div class="reading-conv">' + lines + '</div></div>';
+  });
+  document.getElementById('readingSlides').innerHTML = rSlides;
+}
+
+function buildFlashcards() {
+  let html = '';
+  FLASHCARDS.forEach((f, i) => {
+    html += '<div class="fc-card" id="fc-' + i + '" onclick="flipCard(' + i + ')">' +
+      '<div class="fc-inner">' +
+        '<div class="fc-front">' + f.en + '<div class="hint">🇬🇧 Перекладай українською</div></div>' +
+        '<div class="fc-back">' + f.ua + '</div>' +
+      '</div></div>';
+  });
+  document.getElementById('fcGrid').innerHTML = html;
+}
+function flipCard(i) { document.getElementById('fc-' + i).classList.toggle('flipped'); markDone(8); }
+let allFlipped = false;
+function flipAll() {
+  allFlipped = !allFlipped;
+  document.querySelectorAll('.fc-card').forEach(c => c.classList.toggle('flipped', allFlipped));
+}
+
+function buildSpeaking() {
+  let spSlides = '';
+  SPEAKING.forEach((d, i) => {
+    let lines = '';
+    d.lines.forEach(ln => {
+      if (ln.blank) {
+        lines += '<div class="sp-line"><span class="sp-role">' + ln.role + ':</span>' +
+          '<span class="sp-blank">відповідає про себе англійською...</span></div>';
+      } else {
+        lines += '<div class="sp-line"><span class="sp-role">' + ln.role + ':</span> ' + ln.text + '</div>';
+      }
+    });
+    spSlides += '<div class="car-slide' + (i === 0 ? ' active' : '') + '" id="spslide-' + i + '">' +
+      '<div style="font-weight:800;margin-bottom:10px;color:var(--violet);">' + d.title + '</div>' +
+      (d.note ? '<div class="sp-interview-note">' + d.note + '</div>' : '') +
+      lines + '</div>';
+  });
+  document.getElementById('speakingSlides').innerHTML = spSlides;
+}
+
+function carNav(id, dir) {
+  carState[id] = Math.max(0, Math.min(3, carState[id] + dir));
+  const idx = carState[id];
+  const prefix = id === 'r' ? 'rslide' : 'spslide';
+  document.querySelectorAll('[id^="' + prefix + '"]').forEach((s, i) => s.classList.toggle('active', i === idx));
+  document.getElementById(id + 'prev').disabled = idx === 0;
+  document.getElementById(id + 'next').disabled = idx === 3;
+  document.getElementById(id + 'counter').textContent = (idx + 1) + ' / 4';
+  if (id === 'r' && idx === 3) markDone(7);
+  if (id === 'sp' && idx === 3) markDone(9);
+}
+
+function updateFab() {
+  let g = 0, t = 0;
+  Object.values(quizScores).forEach(s => { if (s) { g += s.got; t += s.total; } });
+  Object.values(puzzleScores).forEach(s => { if (s) { g += s.got; t += s.total; } });
+  document.getElementById('fabScore').textContent = g + '/' + t;
+}
+
+function openResults() {
+  let rows = '', g = 0, t = 0;
+  for (let i = 1; i <= 4; i++) {
+    const s = quizScores['q' + i];
+    const v = s ? s.got + '/' + s.total : '—';
+    if (s) { g += s.got; t += s.total; }
+    rows += '<tr><td>Quiz ' + i + '</td><td>' + v + '</td></tr>';
+  }
+  for (let i = 1; i <= 4; i++) {
+    const s = puzzleScores['p' + i];
+    const v = s ? s.got + '/' + s.total : '—';
+    if (s) { g += s.got; t += s.total; }
+    rows += '<tr><td>Puzzle ' + i + '</td><td>' + v + '</td></tr>';
+  }
+  document.getElementById('resultsBody').innerHTML = rows;
+  const pct = t > 0 ? Math.round(g / t * 100) : 0;
+  const medal = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '👍' : '💪';
+  document.getElementById('resultsTotal').textContent = medal + ' ' + g + '/' + t + ' — ' + pct + '%';
+  let txt = 'A2-07 Past Tense Irregular\n' + '─'.repeat(28) + '\n';
+  for (let i = 1; i <= 4; i++) { const s = quizScores['q' + i]; txt += 'Quiz ' + i + ': ' + (s ? s.got + '/' + s.total : '—') + '\n'; }
+  for (let i = 1; i <= 4; i++) { const s = puzzleScores['p' + i]; txt += 'Puzzle ' + i + ': ' + (s ? s.got + '/' + s.total : '—') + '\n'; }
+  txt += '─'.repeat(28) + '\nЗагалом: ' + g + '/' + t + ' (' + pct + '%) ' + medal;
+  document.getElementById('resultsText').value = txt;
+  document.getElementById('resultsModal').classList.add('open');
+}
+function closeResults() { document.getElementById('resultsModal').classList.remove('open'); }
+function copyResults() { const ta = document.getElementById('resultsText'); ta.select(); document.execCommand('copy'); }
+
+buildStepper();
+buildConvs();
+buildPuzzles();
+buildReading();
+buildFlashcards();
+buildSpeaking();
+</script>
+</body>
+</html>
